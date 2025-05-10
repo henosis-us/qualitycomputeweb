@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
@@ -14,6 +15,7 @@ import ApiKeys from './pages/dashboard/ApiKeys';
 import Settings from './pages/dashboard/Settings';
 import ForgotPasswordPage from './pages/ForgotPasswordPage'; // Import the new Forgot Password page
 import ResetPasswordPage from './pages/ResetPasswordPage'; // Import the new Reset Password page
+import EmailVerificationPage from './pages/EmailVerificationPage'; // Import the new Email Verification page
 
 // Load Stripe promise with your publishable key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -26,8 +28,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} /> {/* New route for Forgot Password */}
-          <Route path="/reset-password/:resetToken" element={<ResetPasswordPage />} /> {/* New route for Reset Password with token */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} /> {/* Route for Forgot Password */}
+          <Route path="/reset-password/:resetToken" element={<ResetPasswordPage />} /> {/* Route for Reset Password with token */}
+          <Route path="/verify-email" element={<EmailVerificationPage />} /> {/* New route for Email Verification */}
           <Route path="/api-reference" element={<ApiReference />} />
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Overview />} />

@@ -66,6 +66,33 @@ export async function loginUser(email, password) {
   }
 }
 
+export async function verifyEmailCode(userId, verificationCode) {
+  try {
+    // Log the URL and request body for debugging
+    console.log(`Attempting to verify email code at URL: ${BASE_URL}/api/verify_email`);
+    console.log('Request body:', JSON.stringify({ user_id: userId, verification_code: verificationCode }));
+
+    const response = await fetch(`${BASE_URL}/api/verify_email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId, verification_code: verificationCode }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ error: 'Verification failed. Please try again.' }));
+      throw new Error(errorData.error || 'Failed to verify email');
+    }
+
+    const data = await response.json();
+    return data; // { message: "Email verified successfully" } or similar
+  } catch (error) {
+    console.error('API Error - Verify Email Code:', error);
+    throw error;
+  }
+}
+
 export async function generateApiKey(token, userId) {
   try {
     const response = await fetch(`${BASE_URL}/api/generate_api_key`, {

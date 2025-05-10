@@ -1,6 +1,6 @@
 // src/pages/Register.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../api'; // Import the registerUser function from api.js
 
 export default function Register() {
@@ -15,6 +15,7 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const onScroll = () => setElevated(window.scrollY > 10);
@@ -47,12 +48,13 @@ export default function Register() {
 
     try {
       // Call the real backend API using registerUser from api.js
-      await registerUser(formData.name, formData.email, formData.username, formData.password);
-      // On success, set success message and redirect to login after delay
-      setSuccess('Registration successful! Redirecting to login...');
+      const data = await registerUser(formData.name, formData.email, formData.username, formData.password);
+      // On success, set success message and redirect to email verification page
+      setSuccess('Registration successful! Please verify your email to complete the process.');
+      // Redirect to verification page with userId and email in state
       setTimeout(() => {
-        window.location.href = '/login';
-      }, 2000);
+        navigate('/verify-email', { state: { userId: data.user_id, email: formData.email } });
+      }, 2000); // Short delay for user to see success message
     } catch (err) {
       // Handle API errors and set error message
       setError(err.message || 'Registration failed. Please try again.');
