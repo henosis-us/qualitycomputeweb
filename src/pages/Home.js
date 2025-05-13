@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   const [copied, setCopied] = useState(false);
   const [elevated, setElevated] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0); // This state is not used in the provided JSX, but kept as is.
 
   const curlCmd = `curl -X POST https://qualitycompute.henosis.us/api/generate \\
   -H "Content-Type: application/json" \\
@@ -22,6 +22,8 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // This useEffect for activeFeature is kept, though activeFeature is not directly used in the visible JSX.
+  // It might be intended for a feature not shown or removed.
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveFeature((prev) => (prev + 1) % 4);
@@ -65,7 +67,7 @@ export default function Home() {
           background: linear-gradient(45deg, #6366f1, #8b5cf6, #d946ef, #6366f1);
           background-size: 400% 400%;
           animation: gradientShift 8s ease infinite;
-          border-radius: 1rem;
+          border-radius: 1rem; /* Corresponds to rounded-2xl if Tailwind base is 4px, or rounded-xl if base is 8px. Check consistency. */
           z-index: -1;
           opacity: 0;
           transition: opacity 0.3s ease;
@@ -73,6 +75,7 @@ export default function Home() {
         .glowing-border:hover::before {
           opacity: 1;
         }
+        /* .feature-card related styles are kept, assuming they might be used elsewhere or for future features. */
         .feature-card {
           transition: all 0.3s ease;
         }
@@ -83,26 +86,26 @@ export default function Home() {
       `}</style>
 
       {/* Pill-shaped Header */}
-      <header className="sticky top-4 z-50 mx-6">
-        <div className={`max-w-7xl mx-auto flex items-center justify-between px-6 py-3 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 transition-all ${elevated ? 'shadow-md' : ''}`}>
+      <header className="sticky top-4 z-50 mx-4 sm:mx-6">
+        <div className={`max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 transition-all ${elevated ? 'shadow-md' : ''}`}>
             <Link to="/" className="flex items-center gap-3 font-semibold text-[17px] tracking-tight">
             <span className="inline-grid place-items-center w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white shadow-md shadow-indigo-200">QC</span>
             <span className="hidden sm:inline-block">Quality Compute</span>
             </Link>
-            <div className="flex items-center gap-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 sm:gap-6"> {/* Adjusted gap for consistency */}
+            <div className="flex items-center gap-3 sm:gap-4"> {/* Adjusted gap */}
                 <Link to="/api-reference" className="hidden md:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Docs</Link>
                 <Link to="/login" className="hidden md:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Login</Link>
-                <Link to="/login" className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors">Get API Key</Link>
+                <Link to="/login" className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors">Get API Key</Link>
             </div>
             </div>
         </div>
-        </header>
+      </header>
 
       {/* Main Content */}
-      <main className="flex-1 py-20 px-6 w-full">
+      <main className="flex-1 py-16 sm:py-20 px-4 sm:px-6 w-full">
         {/* Hero Section */}
-        <section className="pt-12 pb-16">
+        <section className="pt-8 sm:pt-12 pb-12 sm:pb-16">
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Left Column - Content */}
             <div className="space-y-8 flex flex-col justify-center">
@@ -115,16 +118,16 @@ export default function Home() {
                 </p>
               </div>
               {/* CTA Buttons */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={copyCurl}
-                  className="px-6 py-3 rounded-lg bg-white border border-slate-200 font-medium hover:bg-slate-50 transition-colors shadow-sm"
+                  className="w-full sm:w-auto text-center sm:text-left px-6 py-3 rounded-lg bg-white border border-slate-200 font-medium hover:bg-slate-50 transition-colors shadow-sm"
                 >
                   {copied ? 'Copied!' : 'Copy cURL'}
                 </button>
                 <Link
                   to="/api-reference"
-                  className="px-6 py-3 rounded-lg bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors shadow-sm"
+                  className="w-full sm:w-auto text-center sm:text-left inline-flex items-center justify-center px-6 py-3 rounded-lg bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors shadow-sm"
                 >
                   Documentation
                 </Link>
@@ -133,7 +136,7 @@ export default function Home() {
             {/* Right Column - Terminal */}
             <div className="flex items-center">
               <div className="w-full rounded-xl overflow-hidden border border-slate-200 shadow-lg bg-white">
-                <div className="flex items-center justify-between px-6 py-3 bg-slate-50 border-b border-slate-200">
+                <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-slate-50 border-b border-slate-200">
                   <div className="flex items-center gap-2">
                     <div className="flex gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-red-400"></span>
@@ -149,13 +152,13 @@ export default function Home() {
                     {copied ? 'Copied' : 'Copy'}
                   </button>
                 </div>
-                <pre className="p-6 overflow-auto text-sm font-mono max-h-[400px]">
+                <pre className="p-4 sm:p-6 overflow-auto text-sm font-mono max-h-[400px]">
                   <code className="block whitespace-pre text-slate-700">
                     <span className="text-purple-600">curl</span> -X POST <span className="text-blue-600">https://qualitycompute.henosis.us/api/generate</span> \<br />
                     &nbsp;&nbsp;-H <span className="text-green-600">"Content-Type: application/json"</span> \<br />
                     &nbsp;&nbsp;-H <span className="text-green-600">"Authorization: Bearer YOUR_API_KEY"</span> \<br />
                     &nbsp;&nbsp;-d <span className="text-yellow-600">'</span>{'{'}<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600">"model"</span>: <span className="text-green-600">"o4-mini-B10"</span>,<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600">"model"</span>: <span className="text-green-600">"grok-3-mini-B8"</span>,<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600">"input"</span>: <span className="text-green-600">"Generate a poem about space."</span>,<br />
                     &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-600">"include_candidates"</span>: <span className="text-blue-600">false</span><br />
                     &nbsp;&nbsp;{'}'}<span className="text-yellow-600">'</span>
@@ -167,11 +170,11 @@ export default function Home() {
         </section>
 
         {/* How It Works Section - Redesigned */}
-        <section id="how-it-works" className="py-20 mb-16">
-          <div className="max-w-7xl mx-auto px-6">
+        <section id="how-it-works" className="py-16 sm:py-20 mb-12 sm:mb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6"> {/* Use section's own padding */}
             {/* Visualization Section */}
             <div className="bg-gradient-to-r from-slate-800 to-indigo-900 rounded-2xl overflow-hidden shadow-xl">
-              <div className="p-8 md:p-12">
+              <div className="p-6 sm:p-8 md:p-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="text-white space-y-6">
                     <h3 className="text-2xl font-bold">See the difference</h3>
@@ -237,11 +240,11 @@ export default function Home() {
         </section>
 
         {/* Pricing and Providers Section */}
-        <section id="pricing" className="max-w-7xl mx-auto py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+        <section id="pricing" className="max-w-7xl mx-auto py-12 sm:py-16 px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Pricing Card */}
-            <div className="p-8 bg-white rounded-xl border border-slate-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 -mt-16 -mr-16 bg-gradient-to-bl from-indigo-100 to-transparent rounded-full opacity-70"></div>
+            <div className="p-6 sm:p-8 bg-white rounded-xl border border-slate-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 -mt-12 -mr-12 sm:-mt-16 sm:-mr-16 bg-gradient-to-bl from-indigo-100 to-transparent rounded-full opacity-70"></div>
               <div className="relative">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md">
@@ -253,8 +256,8 @@ export default function Home() {
                 </div>
                 <div className="mb-8">
                   <div className="flex items-baseline mb-6">
-                    <span className="text-5xl font-bold">10%</span>
-                    <span className="text-xl text-slate-600 ml-2">of model costs</span>
+                    <span className="text-4xl sm:text-5xl font-bold">10%</span>
+                    <span className="text-lg sm:text-xl text-slate-600 ml-2">of model costs</span>
                   </div>
                   <p className="text-slate-600 mb-6">
                     We only charge a small fee on credit purchase. No commitments or hidden costs.
@@ -282,8 +285,8 @@ export default function Home() {
             </div>
 
             {/* Providers Card */}
-            <div className="p-8 bg-white rounded-xl border border-slate-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 -mt-16 -mr-16 bg-gradient-to-bl from-purple-100 to-transparent rounded-full opacity-70"></div>
+            <div className="p-6 sm:p-8 bg-white rounded-xl border border-slate-200 shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 -mt-12 -mr-12 sm:-mt-16 sm:-mr-16 bg-gradient-to-bl from-purple-100 to-transparent rounded-full opacity-70"></div>
               <div className="relative">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center text-white shadow-md">
@@ -296,13 +299,14 @@ export default function Home() {
                 <p className="text-slate-600 mb-6">
                   Access the best models from leading providers through a single, consistent API.
                 </p>
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 {providers.map((provider, index) => (
                     <div
                     key={provider.name}
-                    className={`flex items-center gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors duration-200 border border-slate-200 ${
-                        providers.length % 2 !== 0 && index === providers.length - 1
-                        ? 'col-span-2 justify-self-center max-w-md'
+                    className={`flex items-center gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors duration-200 border border-slate-200 w-full ${
+                        // If on sm screens and up, and it's the last odd item, make it span 2 columns and center its content.
+                        (providers.length % 2 !== 0 && index === providers.length - 1)
+                        ? 'sm:col-span-2 sm:justify-self-center sm:max-w-sm'
                         : ''
                     }`}
                     >
@@ -324,11 +328,11 @@ export default function Home() {
       </main>
 
       {/* Subtle Footer */}
-      <footer className="py-6 text-center text-sm text-slate-500 border-t border-slate-200 bg-white/50">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="py-8 sm:py-6 text-center text-sm text-slate-500 border-t border-slate-200 bg-white/50 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>© {new Date().getFullYear()} Quality Compute</div>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6"> {/* Added flex-wrap and justify-center for links on small screens */}
               <Link to="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</Link>
               <Link to="/contact" className="hover:text-indigo-600 transition-colors">Contact</Link>

@@ -201,13 +201,11 @@ export default function DashboardLayout() {
                       <span className="text-sm font-bold text-indigo-800">{displayCredits}</span>
                     </div>
                     <button 
-                      disabled // Disable the button temporarily
-                      onClick={openCreditModal} 
-                      className="mt-4 w-full px-4 py-2 bg-indigo-100 hover:bg-indigo-200 transition-colors text-indigo-700 rounded-lg text-sm font-medium cursor-not-allowed opacity-50" // Added styles for disabled state
-                      title="Credit purchasing is temporarily disabled while the payment system is being updated."
-                    >
-                      Buy Credits (Temporarily Unavailable)
-                    </button>
+                    onClick={openCreditModal} 
+                    className="mt-4 w-full px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 transition-colors rounded-lg text-sm font-medium shadow-md hover:shadow-lg"
+                  >
+                    Buy Credits
+                  </button>
                   </div>
                 </div>
                 <nav className="p-3">
@@ -215,7 +213,7 @@ export default function DashboardLayout() {
                     <li>
                       <button 
                         onClick={() => navigateToTab('overview')}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${activeTab === 'overview' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                        className={`w-full flex items-center </svg>gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${activeTab === 'overview' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'}`}
                       >
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />

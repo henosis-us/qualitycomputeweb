@@ -13,9 +13,11 @@ import ApiPlayground from './pages/dashboard/ApiPlayground';
 import UsageAnalytics from './pages/dashboard/UsageAnalytics';
 import ApiKeys from './pages/dashboard/ApiKeys';
 import Settings from './pages/dashboard/Settings';
-import ForgotPasswordPage from './pages/ForgotPasswordPage'; // Import the new Forgot Password page
-import ResetPasswordPage from './pages/ResetPasswordPage'; // Import the new Reset Password page
-import EmailVerificationPage from './pages/EmailVerificationPage'; // Import the new Email Verification page
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import EmailVerificationPage from './pages/EmailVerificationPage';
+import PurchaseSuccess from './pages/PurchaseSuccess'; // New import for payment success page
+import PurchaseCancelled from './pages/PurchaseCancelled'; // New import for payment cancellation page
 
 // Load Stripe promise with your publishable key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -28,10 +30,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} /> {/* Route for Forgot Password */}
-          <Route path="/reset-password/:resetToken" element={<ResetPasswordPage />} /> {/* Route for Reset Password with token */}
-          <Route path="/verify-email" element={<EmailVerificationPage />} /> {/* New route for Email Verification */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:resetToken" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route path="/api-reference" element={<ApiReference />} />
+          <Route path="/payment-success" element={<PurchaseSuccess />} /> {/* New route for payment success */}
+          <Route path="/payment-cancelled" element={<PurchaseCancelled />} /> {/* New route for payment cancellation */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Overview />} />
             <Route path="overview" element={<Overview />} />

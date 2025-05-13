@@ -28,9 +28,7 @@ export default function ApiReference() {
     "input": "Generate a poem about space.",
     "include_candidates": false,
     "judge_model": "o4-mini",
-    "temperature": 0.7,
     "max_tokens": 500,
-    "top_p": 0.9
   }'`;
 
   const copyCurl = () => {
@@ -420,7 +418,12 @@ export default function ApiReference() {
                       <ul className="pl-10 list-disc text-sm text-slate-600 space-y-1">
                         <li>gemini-2.5-pro-preview-03-25</li>
                         <li>gemini-2.5-flash</li>
-                        <li>gemini-2.5-flash-thinking</li>
+                        <li>
+                          gemini-2.5-flash (thinking)
+                          <ul className="pl-4 list-circle">
+                            <li>accessed by adding the thinking_budget parameter</li>
+                          </ul>
+                        </li>
                         <li>gemini-2.0-flash-lite-preview</li>
                         <li>gemini-1.5-flash-8b</li>
                       </ul>
